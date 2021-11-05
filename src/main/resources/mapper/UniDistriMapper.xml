@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--设置dao的位置-->
+<mapper namespace="com.yjh.dao.IUniDistriDao">
+
+    <select id="queryUni" resultType="com.yjh.domain.UniDistri">
+        select *
+        from uni_distribution
+    </select>
+
+    <!--查询高校数据分页-->
+    <select id="queryUniPage" resultType="com.yjh.domain.UniDistri">
+        select *
+        from uni_distribution
+        order by id
+        limit #{offset},#{pageNumber}
+    </select>
+
+    <!--活动高校数量-->
+    <select id="queryUniDistriCount" resultType="Integer">
+        select count(1)
+        from uni_distribution
+    </select>
+
+    <!--根据id获取高校数据-->
+    <select id="queryUniDistriById" resultType="com.yjh.domain.UniDistri">
+        select *
+        from uni_distribution
+        where id=#{id}
+    </select>
+
+    <update id="updateUniDistriById">
+        update uni_distribution
+        set city=#{city},sys_num=#{sysNum},total=#{total},pass_rate=#{passRate}
+        where id=#{id}
+    </update>
+
+    <insert id="insertUniDistri">
+        insert into uni_distribution (city,sys_num,total,pass_rate)
+        values (#{city},#{sysNum},#{total},#{passRate})
+    </insert>
+
+    <!--删除-->
+    <delete id="deleteUniDistriById">
+        delete from uni_distribution
+        where id=#{id}
+    </delete>
+
+    <!--查询高校数据分页-->
+    <select id="queryUniPageByFuzzy" resultType="com.yjh.domain.UniDistri">
+        select *
+        from uni_distribution
+        <where>
+            <if test="city!=null and city!='' ">
+                or city like concat('%',#{city},'%')
+            </if>
+            <if test="sysNum!=null and sysNum!=''">
+                or sys_num like concat('%',#{sysNum},'%')
+            </if>
+            <if test="total!=null and total!=''">
+                or total like concat('%',#{total},'%')
+            </if>
+            <if test="passRate!=null and passRate!=''">
+                or pass_rate like concat('%',#{passRate},'%')
+            </if>
+        </where>
+        order by id
+            limit #{offset},#{pageNumber}
+    </select>
+
+    <!--活动高校数量-->
+    <select id="queryUniDistriCountByFuzzy" resultType="Integer">
+        select count(1)
+        from uni_distribution
+        <where>
+            <if test="city!=null and city!='' ">
+                or city like concat('%',#{city},'%')
+            </if>
+            <if test="sysNum!=null and sysNum!=''">
+                or sys_num like concat('%',#{sysNum},'%')
+            </if>
+            <if test="total!=null and total!=''">
+                or total like concat('%',#{total},'%')
+            </if>
+            <if test="passRate!=null and passRate!=''">
+                or pass_rate like concat('%',#{passRate},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

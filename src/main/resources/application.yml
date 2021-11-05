@@ -1,0 +1,27 @@
+#spring框架设置
+spring:
+  mvc:
+    static-path-pattern: /**
+  #数据库,选择德鲁伊进行
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: 15159352857
+    driver-class-name: com.mysql.jdbc.Driver
+  #thymeleaf
+  thymeleaf:
+    prefix: classpath:/templates/
+    check-template-location: true
+    suffix: .html
+    cache: false
+
+#mybatis的位置,在类路径下的mapper目录下所有 Mapper.mxl 结尾的映射文件
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.yjh.domain
+  configuration:
+    #开启下划线转驼峰
+    map-underscore-to-camel-case: true
+server:
+  port: 9090
